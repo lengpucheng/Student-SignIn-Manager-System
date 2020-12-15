@@ -1,8 +1,6 @@
 package cn.oracle.yhlu.work.oraclework.service.impl;
 
-import cn.oracle.yhlu.work.oraclework.mapper.ILogMapper;
 import cn.oracle.yhlu.work.oraclework.mapper.IStudentMapper;
-import cn.oracle.yhlu.work.oraclework.po.Log;
 import cn.oracle.yhlu.work.oraclework.po.Student;
 import cn.oracle.yhlu.work.oraclework.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;

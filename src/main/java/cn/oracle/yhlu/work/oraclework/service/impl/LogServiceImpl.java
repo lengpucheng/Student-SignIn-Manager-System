@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author lpc lpc@hll520.cn
@@ -21,10 +22,9 @@ import java.util.Date;
  */
 @Service
 public class LogServiceImpl implements LogService {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private ILogMapper logMapper;
-
-    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
     public void log(String what, String... whereAndWho) {
@@ -41,10 +41,10 @@ public class LogServiceImpl implements LogService {
     }
 
     @Override
-    public void log(Log log) {
+    public boolean log(Log log) {
         log.setTime(new Date());
         logger.info("{}", log);
-        logMapper.insert(log);
+        return logMapper.insert(log);
     }
 
     @Override
@@ -56,5 +56,16 @@ public class LogServiceImpl implements LogService {
     @Override
     public void log(String what, String where, Student who) {
         log(what, where, who == null ? null : who.getId());
+    }
+
+
+    @Override
+    public List<Log> logAll() {
+        return logMapper.select();
+    }
+
+    @Override
+    public List<Log> logByID(String id) {
+        return logMapper.selectByID(id);
     }
 }

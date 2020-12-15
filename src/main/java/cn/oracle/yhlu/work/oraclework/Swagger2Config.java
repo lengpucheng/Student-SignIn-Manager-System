@@ -42,13 +42,13 @@ public class Swagger2Config {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 //设置文档标题(API名称)
-                .title("SpringBoot中使用Swagger2构建REST接口")
+                .title("Oracle Work API 信息")
                 //文档描述
-                .description("接口说明")
+                .description("Oracle课程设计API信息 PowerByLYH")
                 //服务条款URL
-                .termsOfServiceUrl("http://127.0.0.1:80/")
+                .termsOfServiceUrl("http://127.0.0.1/")
                 //版本号
-                .version("1.0.0")
+                .version("1.0.1")
                 .build();
     }
 }

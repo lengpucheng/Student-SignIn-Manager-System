@@ -3,7 +3,6 @@ package cn.oracle.yhlu.work.oraclework.control;
 import cn.oracle.yhlu.work.oraclework.po.Student;
 import cn.oracle.yhlu.work.oraclework.service.LogService;
 import cn.oracle.yhlu.work.oraclework.service.SignInService;
-import cn.oracle.yhlu.work.oraclework.service.StudentService;
 import cn.oracle.yhlu.work.oraclework.util.IPTool;
 import cn.oracle.yhlu.work.oraclework.util.ResultUtil;
 import cn.oracle.yhlu.work.oraclework.vo.Result;
@@ -11,7 +10,10 @@ import cn.oracle.yhlu.work.oraclework.vo.StudentVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -24,7 +26,7 @@ import java.util.List;
  */
 @Api(tags = "学生操作")
 @RestController // 该类自带了 @ResponseBody
-@RequestMapping("/server/student/")
+@RequestMapping("/server/login/student/")
 public class StudentControl {
 
     @Autowired
@@ -48,19 +50,19 @@ public class StudentControl {
     @GetMapping("/show")
     public Result<List<StudentVo>> show(HttpServletRequest request) {
         List<StudentVo> show = signInService.show();
-        loger.log("尝试获取全部签到数据",request);
-        if(show==null)
+        loger.log("尝试获取全部签到数据", request);
+        if (show == null)
             ResultUtil.fail("获取失败");
         return ResultUtil.success(show);
     }
 
     @ApiOperation("指定学生签到数据")
     @GetMapping("/show/{id}")
-    public Result<StudentVo> show(@PathVariable("id") String id,HttpServletRequest request){
+    public Result<StudentVo> show(@PathVariable("id") String id, HttpServletRequest request) {
         StudentVo show = signInService.show(id);
-        loger.log("尝试获取"+id+"的签到记录",request);
-        if(show.getSignIns().size()==0)
-            return ResultUtil.fail(show,"学号输入有误");
+        loger.log("尝试获取" + id + "的签到记录", request);
+        if (show.getSignIns().size() == 0)
+            return ResultUtil.fail(show, "学号输入有误");
         return ResultUtil.success(show);
     }
 

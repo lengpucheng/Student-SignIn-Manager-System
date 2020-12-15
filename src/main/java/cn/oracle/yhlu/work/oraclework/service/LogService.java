@@ -4,6 +4,7 @@ import cn.oracle.yhlu.work.oraclework.po.Log;
 import cn.oracle.yhlu.work.oraclework.po.Student;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author lpc lpc@hll520.cn
@@ -32,12 +33,28 @@ public interface LogService {
      *
      * @param log 日志
      */
-    void log(Log log);
+    boolean log(Log log);
 
     /**
      * 记录日志
-     * @param what 事件
+     *
+     * @param what    事件
      * @param request 请求
      */
     void log(String what, HttpServletRequest request);
+
+    /**
+     * 获取全部日志
+     *
+     * @return 全部日志
+     */
+    List<Log> logAll();
+
+    /**
+     * 获取 指定 id 的全部日志
+     *
+     * @param id id
+     * @return 日志
+     */
+    List<Log> logByID(String id);
 }

@@ -4,6 +4,8 @@ import cn.oracle.yhlu.work.oraclework.po.Log;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author lpc lpc@hll520.cn
  * @version 1.0  2020-12-13-14:49
@@ -20,4 +22,19 @@ public interface ILogMapper {
      * @return 是否插入成功
      */
     boolean insert(Log log);
+
+    /**
+     * 获取全部日志
+     *
+     * @return 全部日志
+     */
+    List<Log> select();
+
+    /**
+     * 获取指定ID的全部日志
+     *
+     * @param id id
+     * @return 日志
+     */
+    List<Log> selectByID(String id);
 }

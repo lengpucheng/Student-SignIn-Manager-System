@@ -19,7 +19,7 @@ import java.io.IOException;
  * 描述： 过滤器
  */
 
-@WebFilter(urlPatterns = "/server/student/*")
+@WebFilter(urlPatterns = "/server/login/*")
 //@Component
 public class IdentityFilter implements Filter {
     @Autowired

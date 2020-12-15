@@ -1,7 +1,6 @@
 package cn.oracle.yhlu.work.oraclework.mapper;
 
 import cn.oracle.yhlu.work.oraclework.po.Student;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

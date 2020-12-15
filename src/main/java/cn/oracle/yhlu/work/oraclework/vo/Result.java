@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @since 2020-12-15-20:31
  * 描述：
  */
-@ApiModel("返回结果")
+@ApiModel("请求结果")
 public class Result<T> {
     @ApiModelProperty(value = "返回代码", notes = "成功为200,失败是400,500为请先登录")
     private int code;

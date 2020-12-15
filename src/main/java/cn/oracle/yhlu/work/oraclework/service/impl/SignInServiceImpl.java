@@ -29,7 +29,7 @@ public class SignInServiceImpl implements SignInService {
     private IStudentMapper studentMapper;
 
     @Override
-    public boolean signIn(Student student,String ip) {
+    public boolean signIn(Student student, String ip) {
         SignIn signIn = new SignIn();
         // 设置为当前ID
         signIn.setId(student.getId());
@@ -42,6 +42,7 @@ public class SignInServiceImpl implements SignInService {
         SignIn query = mapper.query(signIn);
         if (query == null)
             return mapper.insert(signIn);
+        // 否则覆盖更新签到
         signIn.set_id(query.get_id());
         return mapper.update(signIn);
     }
@@ -67,7 +68,7 @@ public class SignInServiceImpl implements SignInService {
     }
 
     private double average(List<SignIn> signIns) {
-        if(signIns==null)
+        if (signIns == null)
             return 0.0;
         return signIns.size() * 100.0 / 24;
     }

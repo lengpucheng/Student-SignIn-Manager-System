@@ -1,8 +1,9 @@
 package cn.oracle.yhlu.work.oraclework.po;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
 
-import java.sql.Time;
 import java.util.Date;
 
 /**
@@ -12,19 +13,21 @@ import java.util.Date;
  * 描述：签到表
  */
 @Component
+@ApiModel("签到信息")
 public class SignIn {
-    // 流水号
+    @ApiModelProperty(value = "签到流水号", notes = "自动生成，指定无效")
     private int _id;
-    // 学号
+    @ApiModelProperty("学号")
     private String id;
-    // 日期
+    @ApiModelProperty(value = "日期", notes = "自动设置，一天只能签到一次，重复会覆盖")
     private String date;
-    // 时间
+    @ApiModelProperty(value = "时间", notes = "自动设置")
     private Date time;
-    // ip
+    @ApiModelProperty(value = "IP", notes = "自动捕获")
     private String ip;
 
-    public SignIn(){}
+    public SignIn() {
+    }
 
     public SignIn(String id, Date time) {
         this.id = id;

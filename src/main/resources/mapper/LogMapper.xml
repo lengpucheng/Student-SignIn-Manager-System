@@ -5,4 +5,10 @@
         INSERT into log(id, time, event, ip)
         VALUES (#{id}, #{time}, #{event}, #{ip});
     </insert>
+    <select id="selectByID" resultType="cn.oracle.yhlu.work.oraclework.po.Log">
+        SELECT * FROM log where id=#{id};
+    </select>
+    <select id="select" resultType="cn.oracle.yhlu.work.oraclework.po.Log">
+        SELECT * FROM log;
+    </select>
 </mapper>

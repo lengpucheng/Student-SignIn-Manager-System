@@ -1,5 +1,7 @@
 package cn.oracle.yhlu.work.oraclework.po;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -10,20 +12,22 @@ import java.util.Date;
  * @since 2020-12-13-14:22
  * 描述：
  */
+@ApiModel("日志")
 @Component
 public class Log {
-    // 流水号
+    @ApiModelProperty(value = "日志序号", notes = "自动编号，指定无效")
     private int _id;
-    // who
+    @ApiModelProperty(value = "学号")
     private String id;
-    // when
+    @ApiModelProperty(value = "时间")
     private Date time;
-    // what
+    @ApiModelProperty(value = "事件")
     private String event;
-    // where
+    @ApiModelProperty(value = "IP")
     private String ip;
 
-    public Log(){}
+    public Log() {
+    }
 
     public Log(String id, Date time, String ip) {
         this.id = id;

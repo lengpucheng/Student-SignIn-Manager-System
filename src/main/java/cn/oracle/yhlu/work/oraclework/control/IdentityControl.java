@@ -9,9 +9,9 @@ import cn.oracle.yhlu.work.oraclework.vo.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +31,7 @@ public class IdentityControl {
     @Autowired
     private LogService loger;
 
-    @ApiOperation(value = "登录接口",notes = "只需要ID和Name")
+    @ApiOperation(value = "登录接口", notes = "只需要ID和Name")
     @PostMapping("/login")
     public Result<Student> login(Student student, HttpServletRequest request) {
         Student login = studentService.login(student);
@@ -40,9 +40,20 @@ public class IdentityControl {
         // 记录日志
         loger.log("登录" + (login == null ? "失败-{输入内容为" + student + "}" : "成功"), IPTool.getIpAddr(request), student.getId());
         // 返回结果
-        if(login==null)
-            return ResultUtil.fail(null,"学号与姓名不匹配");
-       return ResultUtil.success(login);
+        if (login == null)
+            return ResultUtil.fail(null, "学号与姓名不匹配");
+        return ResultUtil.success(login);
+    }
+
+    @ApiOperation("退出登录")
+    @GetMapping("/logout")
+    public Result<Boolean> logout(HttpServletRequest request){
+        Student student = (Student) request.getSession().getAttribute("student");
+        if(student==null)
+            return ResultUtil.bool(false,"没有登录哦！");
+        loger.log("退出登录 {"+student+"}",request);
+        request.getSession().invalidate();
+        return ResultUtil.bool(true);
     }
 
 }

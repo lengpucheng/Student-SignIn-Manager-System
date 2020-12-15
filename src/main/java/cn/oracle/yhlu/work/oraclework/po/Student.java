@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * 描述：
  */
 @Component
-@ApiModel(value = "Student 实体类",description = "用于标记一个学生的信息")
+@ApiModel(value = "学生信息", description = "用于标记一个学生的信息")
 public class Student {
     // 学号
     @ApiModelProperty("学号")

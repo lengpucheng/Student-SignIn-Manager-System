@@ -13,16 +13,16 @@ import java.util.List;
  * @since 2020-12-13-15:56
  * 描述：学生显示视图
  */
-@ApiModel("学生视图")
+@ApiModel("学生签到成绩")
 public class StudentVo {
     // 学生
     @ApiModelProperty("学生信息")
     Student student;
     // 签到信息
-    @ApiModelProperty("学生签到集合")
+    @ApiModelProperty("其签到信息")
     List<SignIn> signIns;
     // 平均分
-    @ApiModelProperty("平均分")
+    @ApiModelProperty("其平均分")
     double average;
 
     public StudentVo() {

@@ -1,6 +1,5 @@
 package cn.oracle.yhlu.work.oraclework.service;
 
-import cn.oracle.yhlu.work.oraclework.po.Log;
 import cn.oracle.yhlu.work.oraclework.po.Student;
 
 /**
