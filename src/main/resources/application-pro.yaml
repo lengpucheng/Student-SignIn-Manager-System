@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    username: user    # 用户名
+    password: pass  # 密码
+    url: jdbc:mysql://ip:port/db?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC  #url
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+# Mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml  # 扫描地址
+  type-aliases-package: cn.oracle.yhlu.work.oraclework.po   # 包名
