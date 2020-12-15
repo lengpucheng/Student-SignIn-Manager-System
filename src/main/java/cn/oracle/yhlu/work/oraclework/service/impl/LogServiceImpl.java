@@ -4,11 +4,13 @@ import cn.oracle.yhlu.work.oraclework.mapper.ILogMapper;
 import cn.oracle.yhlu.work.oraclework.po.Log;
 import cn.oracle.yhlu.work.oraclework.po.Student;
 import cn.oracle.yhlu.work.oraclework.service.LogService;
+import cn.oracle.yhlu.work.oraclework.util.IPTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -43,6 +45,12 @@ public class LogServiceImpl implements LogService {
         log.setTime(new Date());
         logger.info("{}", log);
         logMapper.insert(log);
+    }
+
+    @Override
+    public void log(String what, HttpServletRequest request) {
+        Student attribute = (Student) request.getSession().getAttribute("Student");
+        log(what, IPTool.getIpAddr(request), attribute == null ? null : attribute.getId());
     }
 
     @Override

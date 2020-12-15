@@ -5,7 +5,11 @@ import cn.oracle.yhlu.work.oraclework.service.LogService;
 import cn.oracle.yhlu.work.oraclework.service.SignInService;
 import cn.oracle.yhlu.work.oraclework.service.StudentService;
 import cn.oracle.yhlu.work.oraclework.util.IPTool;
+import cn.oracle.yhlu.work.oraclework.util.ResultUtil;
+import cn.oracle.yhlu.work.oraclework.vo.Result;
 import cn.oracle.yhlu.work.oraclework.vo.StudentVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,55 +22,52 @@ import java.util.List;
  * @since 2020-12-13-15:17
  * 描述：
  */
-@RestController
-@RequestMapping("/service")
+@Api(tags = "学生操作")
+@RestController // 该类自带了 @ResponseBody
+@RequestMapping("/server/student/")
 public class StudentControl {
 
-    @Autowired
-    private StudentService studentService;
     @Autowired
     private SignInService signInService;
     @Autowired
     private LogService loger;
 
-    // 登录
-    @ResponseBody
-    @PostMapping("/login")
-    public Student login(Student student, HttpServletRequest request) {
-        Student login = studentService.login(student);
-        // 写入会话
-        request.getSession().setAttribute("student", login);
-        // 记录日志
-        loger.log("登录" + (login == null ? "失败-{输入内容为" + student + "}" : "成功"), IPTool.getIpAddr(request), student.getId());
-        return login;
-    }
 
-    // 签到
+    @ApiOperation(value = "学生签到", notes = "必须先登录且一天只能签一次，重复签到会被覆盖")
     @GetMapping("/singIn")
-    public boolean singIn(HttpServletRequest request) {
+    public Result<Boolean> singIn(HttpServletRequest request) {
         Student student = (Student) request.getSession().getAttribute("student");
-        boolean flag = false;
-        if (student != null)
-            flag = signInService.signIn(student);
-        loger.log(flag ? "签到成功" : "签到失败", IPTool.getIpAddr(request), student);
-        return flag;
+        String ipAddr = IPTool.getIpAddr(request);
+        boolean flag = signInService.signIn(student, ipAddr);
+        loger.log(flag ? "签到成功" : "签到失败", ipAddr, student);
+        return flag ? ResultUtil.success(true) : ResultUtil.fail(false, "签到失败");
     }
 
-    // 显示签到数据
-    @ResponseBody
+
+    @ApiOperation(value = "签到数据", notes = "所有学生全部的签到数据")
     @GetMapping("/show")
-    public List<StudentVo> show() {
-        return signInService.show();
+    public Result<List<StudentVo>> show(HttpServletRequest request) {
+        List<StudentVo> show = signInService.show();
+        loger.log("尝试获取全部签到数据",request);
+        if(show==null)
+            ResultUtil.fail("获取失败");
+        return ResultUtil.success(show);
     }
 
-    // 显示单个学生日志信息
+    @ApiOperation("指定学生签到数据")
+    @GetMapping("/show/{id}")
+    public Result<StudentVo> show(@PathVariable("id") String id,HttpServletRequest request){
+        StudentVo show = signInService.show(id);
+        loger.log("尝试获取"+id+"的签到记录",request);
+        if(show.getSignIns().size()==0)
+            return ResultUtil.fail(show,"学号输入有误");
+        return ResultUtil.success(show);
+    }
 
-    // 显示全部日志
-
-    // 测试
-    @RequestMapping("/author")
+    @GetMapping("/author")
     public String author() {
         return "Oracle 课程设计 @Power by <a href=\"mailto:lpc@hll520.cn\">LPC</a> 2020.12";
     }
+
 
 }

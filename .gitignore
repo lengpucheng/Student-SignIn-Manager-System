@@ -1,0 +1,4 @@
+/.idea/
+/src/test/java/cn/oracle/yhlu/work/oraclework/DataLinkTest.java
+/target/
+/src/main/resources/application-dev.yaml

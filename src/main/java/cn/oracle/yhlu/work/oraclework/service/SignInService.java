@@ -15,10 +15,11 @@ import java.util.List;
 public interface SignInService {
     /**
      * 签到
-     * @param student 签到的人
+     * @param student 学生
+     * @param ip 前端IP
      * @return 是否成功
      */
-    boolean signIn(Student student);
+    boolean signIn(Student student,String ip);
 
     /**
      * 显示全部签到信息

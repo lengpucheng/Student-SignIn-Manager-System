@@ -9,6 +9,7 @@ import cn.oracle.yhlu.work.oraclework.vo.StudentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,12 +29,16 @@ public class SignInServiceImpl implements SignInService {
     private IStudentMapper studentMapper;
 
     @Override
-    public boolean signIn(Student student) {
+    public boolean signIn(Student student,String ip) {
         SignIn signIn = new SignIn();
+        // 设置为当前ID
         signIn.setId(student.getId());
-        signIn.setDate("");
+        // 获取当前的日期
+        signIn.setDate(LocalDate.now().toString());
+        // 设置为当前时间
         signIn.setTime(new Date());
-        signIn.setIp("");
+        // 取到当前IP
+        signIn.setIp(ip);
         SignIn query = mapper.query(signIn);
         if (query == null)
             return mapper.insert(signIn);
@@ -62,6 +67,8 @@ public class SignInServiceImpl implements SignInService {
     }
 
     private double average(List<SignIn> signIns) {
+        if(signIns==null)
+            return 0.0;
         return signIns.size() * 100.0 / 24;
     }
 }

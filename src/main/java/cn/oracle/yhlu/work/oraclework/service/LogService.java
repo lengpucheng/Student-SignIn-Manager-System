@@ -3,6 +3,8 @@ package cn.oracle.yhlu.work.oraclework.service;
 import cn.oracle.yhlu.work.oraclework.po.Log;
 import cn.oracle.yhlu.work.oraclework.po.Student;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author lpc lpc@hll520.cn
  * @version 1.0  2020-12-14-22:53
@@ -31,4 +33,11 @@ public interface LogService {
      * @param log 日志
      */
     void log(Log log);
+
+    /**
+     * 记录日志
+     * @param what 事件
+     * @param request 请求
+     */
+    void log(String what, HttpServletRequest request);
 }

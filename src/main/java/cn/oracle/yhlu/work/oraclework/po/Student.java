@@ -1,5 +1,7 @@
 package cn.oracle.yhlu.work.oraclework.po;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
 
 /**
@@ -9,19 +11,26 @@ import org.springframework.stereotype.Component;
  * 描述：
  */
 @Component
+@ApiModel(value = "Student 实体类",description = "用于标记一个学生的信息")
 public class Student {
     // 学号
+    @ApiModelProperty("学号")
     private String id;
     // 姓名
+    @ApiModelProperty("姓名")
     private String name;
     // 学院
+    @ApiModelProperty("学院")
     private String college;
     // 专业
+    @ApiModelProperty("专业")
     private String vocational;
     // 班级
+    @ApiModelProperty("班级")
     private String className;
 
-    public Student(){}
+    public Student() {
+    }
 
     public Student(String id, String name) {
         this.id = id;

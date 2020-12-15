@@ -12,3 +12,7 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml  # 扫描地址
   type-aliases-package: cn.oracle.yhlu.work.oraclework.po   # 包名
+
+#swagger
+#swagger:
+#  enabled: true;
