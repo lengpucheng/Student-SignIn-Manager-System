@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.oracle.yhlu.work.oraclework.mapper.ISignInMapper">
+    <insert id="insert">
+        INSERT INTO SignIn(id, date, time, ip)
+        values (#{id}, #{date}, #{time}, #{ip});
+    </insert>
+    <update id="update">
+        UPDATE SignIn
+        SET id=#{id},
+            date=#{date},
+            time=#{time},
+            ip=#{ip}
+        WHERE _id = #{_id};
+    </update>
+    <select id="query" resultType="cn.oracle.yhlu.work.oraclework.po.SignIn">
+        SELECT *
+        FROM SignIn;
+    </select>
+    <select id="queryByID" resultType="cn.oracle.yhlu.work.oraclework.po.SignIn">
+        SELECT *
+        FROM SignIn
+        where id = #{id}
+    </select>
+</mapper>

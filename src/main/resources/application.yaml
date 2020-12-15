@@ -1,0 +1,3 @@
+spring:
+  profiles:
+    active: dev   # 使用dev的配置文件
