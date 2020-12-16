@@ -66,10 +66,4 @@ public class StudentControl {
         return ResultUtil.success(show);
     }
 
-    @GetMapping("/author")
-    public String author() {
-        return "Oracle 课程设计 @Power by <a href=\"mailto:lpc@hll520.cn\">LPC</a> 2020.12";
-    }
-
-
 }

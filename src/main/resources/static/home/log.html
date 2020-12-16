@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+ *  创建时间: 2020-12-16-19:47
+ *  作   者: lpc
+ *  Email : lpc@hll520.cn
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>查看日志</title>
+    <!-- JQuery -->
+    <script type="text/javascript" src="http://wtushop.hll520.cn:8080/static/js/jquery.min.js"></script>
+    <!-- Bootstrap核心CSS和JS -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="icon" type="image/png" href="https://www.wtu.edu.cn/images/favicon.ico">
+    <!-- 请求 -->
+    <script src="../Util.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            httpGOLogin("/server/login/log/show", {}, function (data) {
+                if (!data.success) {
+                    alert("加载失败！" + data.msg + "请刷新");
+                    return;
+                }
+                for (let i = 0; i < data.data.length; i++) {
+                    let log = data.data[i];
+                    $("#searchVar").append(`
+                   <tr>
+                        <td>${formatDateAndTimeToString(new Date(log.time))}</td>
+                        <td>${log.ip}</td>
+                        <td>${log.event}</td>
+                        <td>${log.id}</td>
+                        </tr>
+                   `);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<h1 class="page-header">日志</h1>
+<!--<span>搜索：</span>-->
+<!--<label for="nameKey" class="form-inline">-->
+<!--    <input type="text" id="nameKey" class="form-control">&nbsp;&nbsp;-->
+<!--</label>-->
+<!--<button id="search" class="btn btn-primary">-->
+<!--    <span class="glyphicon glyphicon-search"></span> 搜索-->
+<!--</button>&nbsp;-->
+<!--<button id="reset" class="btn btn-danger">-->
+<!--    <span class="glyphicon glyphicon-repeat"></span> 恢复-->
+<!--</button>&nbsp;-->
+<!--共找到<span id="sumRows" style="color: crimson"></span>条数据&nbsp;-->
+<div class="table-responsive">
+    <table id="listCustomer" class="table table-striped">
+        <thead>
+        <th>时间</th>
+        <th>IP</th>
+        <th>详情</th>
+        <th>对应ID</th>
+        </thead>
+        <tbody id="searchVar">
+        <!-- 预留数据 -->
+
+
+        </tbody>
+        <tfoot>
+        <!-- 尾部数据 -->
+        <tr></tr>
+        </tfoot>
+    </table>
+</div>
+<!--<div class="icon-align-center">-->
+<!--    <a href="#" id="start">首页</a>-->
+<!--    <button id="upon">上一页</button>&nbsp;-->
+<!--    第<span id="pageNum" style="color: #142fdc"></span>页&nbsp;-->
+<!--    <button id="next">下一页</button>&nbsp;-->
+<!--    共<span id="pages"></span>页&nbsp;-->
+<!--    <a href="#" id="last">末页</a>-->
+<!--</div>-->
+</body>
+</html>

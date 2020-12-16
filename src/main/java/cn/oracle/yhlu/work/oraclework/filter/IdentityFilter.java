@@ -40,6 +40,8 @@ public class IdentityFilter implements Filter {
             session.setAttribute("url", requestURI);
             loger.log("未登录访问 " + requestURI + " 被拦截！", ipAddr);
             response.getWriter().write(ResultUtil.unlogin("").toString());
+            // 设置json 格式 避免无法解析
+            response.setContentType("application/json");
             return;
         }
 

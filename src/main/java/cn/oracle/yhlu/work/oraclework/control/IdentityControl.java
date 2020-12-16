@@ -30,6 +30,9 @@ public class IdentityControl {
     private StudentService studentService;
     @Autowired
     private LogService loger;
+    // 测试自动注入
+    @Autowired
+    private HttpServletRequest requestT;
 
     @ApiOperation(value = "登录接口", notes = "只需要ID和Name")
     @PostMapping("/login")
@@ -47,13 +50,28 @@ public class IdentityControl {
 
     @ApiOperation("退出登录")
     @GetMapping("/logout")
-    public Result<Boolean> logout(HttpServletRequest request){
+    public Result<Boolean> logout(HttpServletRequest request) {
         Student student = (Student) request.getSession().getAttribute("student");
-        if(student==null)
-            return ResultUtil.bool(false,"没有登录哦！");
-        loger.log("退出登录 {"+student+"}",request);
+        if (student == null)
+            return ResultUtil.bool(false, "没有登录哦！");
+        loger.log("退出登录 {" + student + "}", request);
         request.getSession().invalidate();
         return ResultUtil.bool(true);
+    }
+
+    @ApiOperation("获取用户的登录信息")
+    @GetMapping("/info")
+    public Result<Student> info(HttpServletRequest request) {
+        Student student = (Student) request.getSession().getAttribute("student");
+        if (student == null)
+            return ResultUtil.fail(null, "没有登录哦！");
+        return ResultUtil.success(student);
+    }
+
+    @ApiOperation("测试并显示信息")
+    @GetMapping("/author")
+    public String author() {
+        return "Oracle 课程设计 @Power by <a href=\"mailto:lpc@hll520.cn\">LPC</a> 2020.12";
     }
 
 }

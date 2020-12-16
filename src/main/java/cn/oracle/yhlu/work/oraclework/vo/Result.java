@@ -41,11 +41,11 @@ public class Result<T> {
 
     @Override
     public String toString() {
-        return "{\"Student\": {\"code\": \"" + this.code
+        return "{\"code\": \"" + this.code
                 + "\", \"success\": \"" + this.success
                 + "\", \"data\": \"" + this.data
                 + "\", \"msg\": \"" + this.msg
-                + "\"}}";
+                + "\"}";
     }
 
     public int getCode() {
