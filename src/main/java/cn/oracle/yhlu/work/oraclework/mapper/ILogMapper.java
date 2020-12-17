@@ -15,6 +15,21 @@ import java.util.List;
 @Repository
 @Mapper
 public interface ILogMapper {
+
+    /**
+     * 根据 _id 删除日志
+     * @param _id 日志id
+     * @return 是否成功
+     */
+    boolean delete(int _id);
+
+    /**
+     * 根据 _id 重新日志
+     * @param _id _id
+     * @return 日志
+     */
+    Log query(int _id);
+
     /**
      * 插入一条日志记录
      *

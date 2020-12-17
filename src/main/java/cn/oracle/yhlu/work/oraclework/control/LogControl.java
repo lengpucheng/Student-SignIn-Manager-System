@@ -1,7 +1,9 @@
 package cn.oracle.yhlu.work.oraclework.control;
 
 import cn.oracle.yhlu.work.oraclework.po.Log;
+import cn.oracle.yhlu.work.oraclework.po.Student;
 import cn.oracle.yhlu.work.oraclework.service.LogService;
+import cn.oracle.yhlu.work.oraclework.util.IPTool;
 import cn.oracle.yhlu.work.oraclework.util.ResultUtil;
 import cn.oracle.yhlu.work.oraclework.vo.Result;
 import io.swagger.annotations.Api;
@@ -20,28 +22,31 @@ import java.util.List;
  */
 @Api(tags = "日志操作")
 @RestController
-@RequestMapping("/server/login/log/")
+@RequestMapping("/server/login/log")
 public class LogControl {
     @Autowired
-    LogService service;
+    private LogService service;
+    @Autowired
+    private HttpServletRequest request;
 
-    @ApiOperation(value = "加入一条日志", notes = "需要登录才可")
-    @PostMapping("/write")
+
+    @ApiOperation(value = "写入日志", notes = "需要登录才可")
+    @PostMapping()
     public Result<Boolean> write(Log log) {
         return ResultUtil.bool(service.log(log));
     }
 
-    @ApiOperation("获取全部日志")
-    @GetMapping("/show")
-    public Result<List<Log>> show(HttpServletRequest request) {
+    @ApiOperation("获取日志")
+    @GetMapping()
+    public Result<List<Log>> read() {
         service.log("尝试获取全部日志", request);
         List<Log> logs = service.logAll();
         return ResultUtil.success(logs);
     }
 
     @ApiOperation("获取指定日志")
-    @GetMapping("/show/{id}")
-    public Result<List<Log>> show(@PathVariable("id") String id, HttpServletRequest request) {
+    @GetMapping("/{id}")
+    public Result<List<Log>> read(@PathVariable("id") String id) {
         List<Log> logs = service.logByID(id);
         if (logs == null) {
             service.log("获取" + id + "日志失败", request);
@@ -49,5 +54,14 @@ public class LogControl {
         }
         service.log("获取了" + id + "日志", request);
         return ResultUtil.success(logs);
+    }
+
+    @ApiOperation(value = "删除指定日志", notes = "根据日志顺序码删除")
+    @DeleteMapping("/{lid}")
+    public Result<Boolean> delete(@PathVariable("lid") int lid) {
+        Student student = (Student) request.getSession().getAttribute("student");
+        String ipAddr = IPTool.getIpAddr(request);
+        service.log("尝试删除" + lid + "的日志", student.getId(), ipAddr);
+        return ResultUtil.bool(service.remove(student.getId(), lid));
     }
 }

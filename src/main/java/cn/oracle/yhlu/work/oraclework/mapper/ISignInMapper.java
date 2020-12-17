@@ -16,6 +16,19 @@ import java.util.List;
 @Mapper
 public interface ISignInMapper {
 
+    /**
+     * 根据_id 获取
+     * @param _id 流水号
+     * @return 签到数据
+     */
+    SignIn select(int _id);
+
+    /**
+     * 根据_ID 删除
+     * @param _id _id
+     * @return 是否删除成功
+     */
+    boolean delete(int _id);
 
     /**
      * 根据signIn的 ID和日期 查询

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2020-12-15-20:17
  * 描述：
  */
-@Api(tags = "身份识别")
+@Api(tags = "身份识别接口")
 @RestController()
 @RequestMapping("server/identity")
 public class IdentityControl {
@@ -32,11 +32,11 @@ public class IdentityControl {
     private LogService loger;
     // 测试自动注入
     @Autowired
-    private HttpServletRequest requestT;
+    private HttpServletRequest request;
 
-    @ApiOperation(value = "登录接口", notes = "只需要ID和Name")
+    @ApiOperation(value = "用户登录", notes = "只需要ID和Name")
     @PostMapping("/login")
-    public Result<Student> login(Student student, HttpServletRequest request) {
+    public Result<Student> login(Student student) {
         Student login = studentService.login(student);
         // 写入会话
         request.getSession().setAttribute("student", login);
@@ -50,7 +50,7 @@ public class IdentityControl {
 
     @ApiOperation("退出登录")
     @GetMapping("/logout")
-    public Result<Boolean> logout(HttpServletRequest request) {
+    public Result<Boolean> logout() {
         Student student = (Student) request.getSession().getAttribute("student");
         if (student == null)
             return ResultUtil.bool(false, "没有登录哦！");
@@ -59,16 +59,16 @@ public class IdentityControl {
         return ResultUtil.bool(true);
     }
 
-    @ApiOperation("获取用户的登录信息")
+    @ApiOperation("登录信息")
     @GetMapping("/info")
-    public Result<Student> info(HttpServletRequest request) {
+    public Result<Student> info() {
         Student student = (Student) request.getSession().getAttribute("student");
         if (student == null)
             return ResultUtil.fail(null, "没有登录哦！");
         return ResultUtil.success(student);
     }
 
-    @ApiOperation("测试并显示信息")
+    @ApiOperation("项目测试")
     @GetMapping("/author")
     public String author() {
         return "Oracle 课程设计 @Power by <a href=\"mailto:lpc@hll520.cn\">LPC</a> 2020.12";

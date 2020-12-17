@@ -13,6 +13,16 @@ import java.util.List;
  * 描述：
  */
 public interface LogService {
+
+    /**
+     * 删除本人日志
+     *
+     * @param id  学号
+     * @param _id 日志id
+     * @return 是否成功删除
+     */
+    boolean remove(String id, int _id);
+
     /**
      * 记录日志
      *

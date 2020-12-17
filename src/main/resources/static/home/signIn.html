@@ -23,12 +23,14 @@
     <script src="../Util.js"></script>
     <script type="text/javascript">
         $(function () {
-            httpGOLogin("/server/login/student/show", {}, function (data) {
+            httpGOLogin("/server/login/signIn/", {}, function (data) {
                 if (!data.success) {
                     alert("加载失败！" + data.msg + "请刷新");
                     return;
                 }
-                for (let i = 0; i < data.data.length; i++) {
+                let length = data.data.length;
+                $("#sumRows").html(length);
+                for (let i = 0; i < length; i++) {
                     let stuVo = data.data[i];
                     $("#searchVar").append(`
                    <tr>
@@ -58,7 +60,7 @@
 <!--<button id="reset" class="btn btn-danger">-->
 <!--    <span class="glyphicon glyphicon-repeat"></span> 恢复-->
 <!--</button>&nbsp;-->
-<!--共找到<span id="sumRows" style="color: crimson"></span>条数据&nbsp;-->
+共找到<span id="sumRows" style="color: crimson"></span>条数据&nbsp;
 <div class="table-responsive">
     <table id="listCustomer" class="table table-striped">
         <thead>

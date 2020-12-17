@@ -1,6 +1,8 @@
 package cn.oracle.yhlu.work.oraclework.service;
 
+import cn.oracle.yhlu.work.oraclework.po.SignIn;
 import cn.oracle.yhlu.work.oraclework.po.Student;
+import cn.oracle.yhlu.work.oraclework.vo.Result;
 import cn.oracle.yhlu.work.oraclework.vo.StudentVo;
 
 import java.util.List;
@@ -12,14 +14,40 @@ import java.util.List;
  * 描述：
  */
 public interface SignInService {
+
+    /**
+     * 获取今天的签到数据
+     * @param id 学号
+     * @return 签到数据
+     */
+    Result<SignIn> getNow(String id);
+
     /**
      * 签到
      *
-     * @param student 学生
+     * @param id 学号
      * @param ip      前端IP
      * @return 是否成功
      */
-    boolean signIn(Student student, String ip);
+    Result<SignIn> signIn(String id, String ip);
+
+
+    /**
+     * 重新当天的签到
+     * @param id 学号
+     * @param ip IP
+     * @return 是否签到成功
+     */
+    Result<SignIn> reSign(String id,String ip);
+
+    /**
+     * 移除一条签到数据
+     * @param id 学号
+     * @param _id 流水号
+     * @return 是否移除成功
+     */
+    Result<SignIn> remove(String id,int _id);
+
 
     /**
      * 显示全部签到信息

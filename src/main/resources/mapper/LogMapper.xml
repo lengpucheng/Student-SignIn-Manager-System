@@ -5,10 +5,23 @@
         INSERT into log(id, time, event, ip)
         VALUES (#{id}, #{time}, #{event}, #{ip});
     </insert>
+    <delete id="delete">
+        DELETE
+        from log
+        where _id = #{_id};
+    </delete>
     <select id="selectByID" resultType="cn.oracle.yhlu.work.oraclework.po.Log">
-        SELECT * FROM log where id=#{id};
+        SELECT *
+        FROM log
+        where id = #{id};
     </select>
     <select id="select" resultType="cn.oracle.yhlu.work.oraclework.po.Log">
-        SELECT * FROM log;
+        SELECT *
+        FROM log;
+    </select>
+    <select id="query" resultType="cn.oracle.yhlu.work.oraclework.po.Log">
+        SELECT *
+        FROM log
+        where _id = #{_id};
     </select>
 </mapper>

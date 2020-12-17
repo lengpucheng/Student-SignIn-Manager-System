@@ -12,7 +12,7 @@
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>个人签到数据</title>
+    <title>个人日志</title>
     <!-- JQuery -->
     <script type="text/javascript" src="http://wtushop.hll520.cn:8080/static/js/jquery.min.js"></script>
     <!-- Bootstrap核心CSS和JS -->
@@ -24,21 +24,22 @@
     <script type="text/javascript">
         $(function () {
             let stu = getLocal("user");
-            httpGOLogin("/server/login/signIn/" + stu.id, {}, function (data) {
+            httpGOLogin("/server/login/log/" + stu.id, {}, function (data) {
                 if (!data.success) {
                     alert("加载失败！" + data.msg + "请刷新");
                     return;
                 }
+                let length = data.data.length;
                 $("#name").html(stu.name);
-                let length = data.data.signIns.length;
                 $("#sumRows").html(length);
                 for (let i = 0; i < length; i++) {
-                    let sign = data.data.signIns[i];
+                    let log = data.data[i];
                     $("#searchVar").append(`
-                        <tr>
-                        <td>${sign.date}</td>
-                        <td>${sign.ip}</td>
-                        <td>${formatDateAndTimeToString(new Date(sign.time))}</td>
+                   <tr>
+                        <td>${log.time}</td>
+                        <td>${log.ip}</td>
+                        <td>${log.event}</td>
+                        <td>${log.id}</td>
                         </tr>
                    `);
                 }
@@ -47,7 +48,7 @@
     </script>
 </head>
 <body>
-<h1 class="page-header"><span id="name"></span> 签到数据</h1>
+<h1 class="page-header"><span id="name"></span> 操作日志</h1>
 <!--<span>搜索：</span>-->
 <!--<label for="nameKey" class="form-inline">-->
 <!--    <input type="text" id="nameKey" class="form-control">&nbsp;&nbsp;-->
@@ -62,9 +63,10 @@
 <div class="table-responsive">
     <table id="listCustomer" class="table table-striped">
         <thead>
-        <th>日期</th>
-        <th>IP</th>
         <th>时间</th>
+        <th>IP</th>
+        <th>详情</th>
+        <th>对应ID</th>
         </thead>
         <tbody id="searchVar">
         <!-- 预留数据 -->

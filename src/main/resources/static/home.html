@@ -25,11 +25,17 @@
     <script src="Util.js"></script>
     <script>
         $(function () {
+            /* 当点击菜单 */
+            $("#menu li").click(function () {
+                /* 移除全部样式 */
+                $("#menu li").removeClass("active");
+                /* 给当前添加样式 */
+                $(this).addClass("active");
+            });
+
+            // 判断是否登录
+            isLogin();
             let user = getLocal("user");
-            if (user === null || user === undefined) {
-                alert("请登录！");
-                window.location.href = "/login.html";
-            }
             // 姓名
             $("#userName").html(user.name);
             // 头像
@@ -64,13 +70,11 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-link">
-                <!--                <li><a href="/swagger-ui/index.html" target="_view">API数据</a></li>-->
                 <li><a href="/swagger-ui/index.html" target="_view">API数据</a></li>
-                <!--                <li><a href="http://wtushop.hll520.cn:8080/home" target="_view">商城首页</a></li>-->
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <button type="button" class="btn btn-primary navbar-btn">
+                    <button type="button" class="btn btn-primary navbar-btn" onclick="signIn()">
                         <span class="glyphicon glyphicon-heart"></span> 签到
                     </button>
                 </li>

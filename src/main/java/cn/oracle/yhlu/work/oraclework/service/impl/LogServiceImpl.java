@@ -27,6 +27,15 @@ public class LogServiceImpl implements LogService {
     private ILogMapper logMapper;
 
     @Override
+    public boolean remove(String id, int _id) {
+        Log query = logMapper.query(_id);
+        if (query == null || !query.getId().equals(id)) {
+            return false;
+        }
+        return logMapper.delete(_id);
+    }
+
+    @Override
     public void log(String what, String... whereAndWho) {
         Log log = new Log();
         log.setEvent(what);

@@ -29,9 +29,15 @@ public class SignIn {
     public SignIn() {
     }
 
-    public SignIn(String id, Date time) {
+    public SignIn(String id, String date) {
         this.id = id;
-        this.time = time;
+        this.date = date;
+    }
+
+    public SignIn(int _id, String id, String ip) {
+        this._id = _id;
+        this.id = id;
+        this.ip = ip;
     }
 
     @Override

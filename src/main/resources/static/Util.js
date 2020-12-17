@@ -5,7 +5,7 @@
  * 描述：
  */
 
-let WTU_SI = "CN.WTUCloud-SI.WTU.LUYUNHAO";
+let WTU_SI = "CN.WTUCloud-SI.WTU.LUYUNHAO.";
 
 /**
  * 奖数据写入本地缓存
@@ -26,6 +26,103 @@ function getLocal(key) {
     return JSON.parse(localStorage.getItem(WTU_SI + key));
 }
 
+/**
+ * 签到接口
+ */
+function signIn() {
+    httpGOLogin("/server/login/signIn", {}, function (data) {
+        if (data.success) {
+            alert("签到成功！");
+        } else {
+            if (data.code === 201) {
+                if (confirm("你已经在" + formatDateAndTimeToString(new Date(data.data.time)) + "时签过到了！\n是否覆盖签到？"))
+                    reSign();
+                return;
+            }
+            alert("签到失败！" + data.msg + "请重新签到");
+        }
+    }, "post");
+}
+
+/**
+ * 重新签到
+ */
+function reSign() {
+    httpGOLogin("/server/login/signIn", {}, function (data) {
+        if (data.success) {
+            alert("更新签到成功！");
+        } else {
+            alert("更新签到失败！" + data.msg + "请重新签到");
+        }
+    }, "put");
+}
+
+/**
+ * 判断是否登录
+ * @param success 是的回调 默认是存储 user
+ * @param fail 否的回调 默认跳转到登录页面
+ */
+function isLogin(success, fail) {
+    if (success === null || success === undefined)
+        success = function (data) {
+            saveLocal("user", data.data);
+        }
+    if (fail === null || fail === undefined)
+        fail = function (data) {
+            alert("请先登录！")
+            // 保存当前被拦截的页面url
+            saveLocal("url", window.location.href);
+            window.location.href = "/login.html";
+        }
+    // 实际回调
+    let check = function (data) {
+        if (data.success)
+            success(data);
+        else
+            fail(data);
+    }
+    // 请求
+    httpGOLogin("/server/identity/info", {}, check, "GET");
+}
+
+/**
+ * 登录
+ * @param id id
+ * @param name name
+ * @param success 回调
+ */
+function doLogin(id, name, success) {
+    // 检验
+    if (id.length !== 10) {
+        alert("学号应该是10位数");
+        return;
+    }
+    if (name.length < 1) {
+        alert("请输入姓名");
+        return;
+    }
+    // 默认回调
+    if (success === null || success === undefined)
+        success = function (result) {
+            if (!result.success) {
+                alert("登录失败！" + result.msg);
+                return;
+            }
+            // 写入缓存
+            saveLocal("user", result.data);
+            let local = getLocal("url");
+            // 如果有被拦截的就跳转
+            if (local !== null) {
+                saveLocal("url", null);
+                window.location.href = local;
+                return;
+            }
+            window.location.href = "home.html";
+        };
+
+    // 请求
+    httpGo("/server/identity/login", {id: id, name: name}, success, "POST");
+}
 
 /**
  *  带登录验证的 Http 请求
@@ -114,11 +211,9 @@ function formatDateAndTimeToString(date) {
     }
     let hours = date.getHours();
     let mins = date.getMinutes();
-    let secs = date.getSeconds();
-    let msecs = date.getMilliseconds();
+    let secs = date.getUTCSeconds();
     if (hours < 10) hours = "0" + hours;
     if (mins < 10) mins = "0" + mins;
     if (secs < 10) secs = "0" + secs;
-    if (msecs < 10) secs = "0" + msecs;
-    return formatDateToString(date) + " " + hours + ":" + mins + ":" + secs + ":" + msecs;
+    return formatDateToString(date) + " " + hours + ":" + mins + ":" + secs;
 }

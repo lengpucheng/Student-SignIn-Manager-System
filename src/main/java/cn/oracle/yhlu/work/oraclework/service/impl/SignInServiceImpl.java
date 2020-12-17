@@ -5,6 +5,8 @@ import cn.oracle.yhlu.work.oraclework.mapper.IStudentMapper;
 import cn.oracle.yhlu.work.oraclework.po.SignIn;
 import cn.oracle.yhlu.work.oraclework.po.Student;
 import cn.oracle.yhlu.work.oraclework.service.SignInService;
+import cn.oracle.yhlu.work.oraclework.util.ResultUtil;
+import cn.oracle.yhlu.work.oraclework.vo.Result;
 import cn.oracle.yhlu.work.oraclework.vo.StudentVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,22 +31,49 @@ public class SignInServiceImpl implements SignInService {
     private IStudentMapper studentMapper;
 
     @Override
-    public boolean signIn(Student student, String ip) {
-        SignIn signIn = new SignIn();
-        // 设置为当前ID
-        signIn.setId(student.getId());
-        // 获取当前的日期
-        signIn.setDate(LocalDate.now().toString());
-        // 设置为当前时间
-        signIn.setTime(new Date());
-        // 取到当前IP
-        signIn.setIp(ip);
-        SignIn query = mapper.query(signIn);
+    public Result<SignIn> getNow(String id) {
+        SignIn query = mapper.query(new SignIn(id, LocalDate.now().toString()));
         if (query == null)
-            return mapper.insert(signIn);
-        // 否则覆盖更新签到
-        signIn.set_id(query.get_id());
-        return mapper.update(signIn);
+            return ResultUtil.fail(query, "今天还没有签到哦");
+        return ResultUtil.success(query);
+    }
+
+    @Override
+    public Result<SignIn> signIn(String id, String ip) {
+        SignIn signIn = new SignIn(id, LocalDate.now().toString());
+        SignIn query = mapper.query(signIn);
+        // 如果已经存在就返回已经存在的
+        if (query != null) {
+            return new Result<>(false, 201, query, "已经签过到了！");
+        }
+
+        signIn.setTime(new Date());
+        signIn.setIp(ip);
+        boolean insert = mapper.insert(signIn);
+        return ResultUtil.build(insert, signIn);
+    }
+
+    @Override
+    public Result<SignIn> reSign(String id, String ip) {
+        Result<SignIn> signInResult = signIn(id, ip);
+        signInResult.setMsg("已完成签到");
+        if (signInResult.isSuccess())
+            return signInResult;
+        SignIn data = signInResult.getData();
+        data.setIp(ip);
+        data.setTime(new Date());
+        if (mapper.update(data))
+            return ResultUtil.success(data, "签到成功");
+        return ResultUtil.fail("未知错误");
+    }
+
+    @Override
+    public Result<SignIn> remove(String id, int _id) {
+        SignIn select = mapper.select(_id);
+        if (select == null || !select.getId().equals(id)) {
+            return ResultUtil.fail("没有权限");
+        }
+        return ResultUtil.build(mapper.delete(_id));
     }
 
     @Override
@@ -67,6 +96,12 @@ public class SignInServiceImpl implements SignInService {
         return new StudentVo(student, signIns, average(signIns));
     }
 
+    /**
+     * 计算平均成绩
+     *
+     * @param signIns 集合
+     * @return 平均成绩
+     */
     private double average(List<SignIn> signIns) {
         if (signIns == null)
             return 0.0;

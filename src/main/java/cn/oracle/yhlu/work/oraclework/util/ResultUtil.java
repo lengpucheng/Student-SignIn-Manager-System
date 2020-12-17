@@ -12,6 +12,42 @@ import cn.oracle.yhlu.work.oraclework.vo.Result;
 public class ResultUtil {
 
     /**
+     * 构造通用的方法
+     *
+     * @param flag 是否成功
+     * @param data 数据
+     * @param <T>  数据类型
+     * @return 自动判断code的结果集
+     */
+    public static <T> Result<T> build(boolean flag, T data) {
+        return build(flag, data, null);
+    }
+
+    /**
+     * 构造通用的方法
+     *
+     * @param flag 是否成功
+     * @param <T>  数据类型
+     * @return 自动判断code的结果集
+     */
+    public static <T> Result<T> build(boolean flag) {
+        return build(flag,null,null);
+    }
+
+    /**
+     * 构造通用的方法
+     *
+     * @param flag 是否成功
+     * @param data 数据
+     * @param msg  消息
+     * @param <T>  数据类型
+     * @return 自动判断code的结果集
+     */
+    public static <T> Result<T> build(boolean flag, T data, String msg) {
+        return new Result<>(flag, flag ? 200 : 400, data, msg);
+    }
+
+    /**
      * 返回一个带数据的成功结果
      *
      * @param data 数据
