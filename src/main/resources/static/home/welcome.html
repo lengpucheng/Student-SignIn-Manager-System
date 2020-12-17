@@ -4,12 +4,111 @@
  *  作   者: lpc
  *  Email : lpc@hll520.cn
 -->
-<html lang="en">
+<html lang="zh-cn">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，响应式布局 -->
+    <title>控制台</title>
+    <!-- JQuery -->
+    <script src="http://wtushop.hll520.cn:8080/static/js/jquery.min.js"></script>
+    <!-- Bootstrap核心CSS 、JS-->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- 适用于Surface /台式机Windows 8错误的IE10视口黑客 -->
+    <script src="https://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <link href="https://v3.bootcss.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <!--图标 -->
+    <link rel="icon" type="image/png" href="https://www.wtu.edu.cn/images/favicon.ico">
+    <script src="../Util.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            /*  从1-10中选择一个当背景  */
+            let mg = Math.floor(Math.random() * 11);
+            $("body").css({
+                "background": "url('http://wtushop.hll520.cn/image/" + mg + ".jpg') no-repeat center",
+                "background-size": "cover",
+                "-webkit-background-size": "cover",
+                "-o-background-size": "cover"
+            });
+
+            let stu = getLocal("user");
+            $("#name").html(stu.name);
+            $("#info").html(`
+            <p>学号:${stu.id}</p>
+                        <p>学院:${stu.college}</p>
+                        <p>专业:${stu.vocational}</p>
+                        <p>班级:${stu.className}</p>
+            `);
+            // 获取签到数据
+            httpGOLogin("/server/login/signIn/now", {}, function (data) {
+                if (data.success) {
+                    $("#sign").html(data.data.time);
+                } else {
+                    $("#sign").html("今天还未签到!");
+                }
+            });
+
+
+        });
+    </script>
 </head>
 <body>
+<div class="container" style="margin-top: 150px;margin-bottom: 150px;padding: 30px;background-color: rgba(229,229,229,0.3);border-radius: 25px">
+    <div class="row clearfix">
+        <div class="col-md-6 column">
+            <div class="row clearfix">
+                <div class="col-md-6 column" style="text-align: center;">
+                    <img alt="140x140" src="https://www.wtu.edu.cn/images/favicon.ico" class="img-circle"/>
+                </div>
+                <div class="col-md-6 column">
+                    <h1 id="name">NAME</h1>
+                    <div id="info">
+                        <p>学号:</p>
+                        <p>学院:</p>
+                        <p>专业:</p>
+                        <p>班级:</p>
+                    </div>
 
+                </div>
+            </div>
+            <p></p>
+            <div class="row clearfix">
+                <div class="col-md-6 column">
+                    <button type="button" class="btn btn-block btn-success btn-lg" onclick="signIn()">签到</button>
+                </div>
+                <div class="col-md-6 column">
+                    <p>上次签到时间:</p>
+                    <p id="sign" style="color: darkturquoise">2020-12-20</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 column">
+            <div class="panel-body">
+                <ul class="nav nav-stacked nav-pills">
+                    <li class="active">
+                        <a href="signIn.html">全部签到数据</a>
+                    </li>
+                    <li>
+                        <a href="signPerson.html">个人签到数据</a>
+                    </li>
+                    <li>
+                        <a href="log.html">全部操作日志</a>
+                    </li>
+                    <li>
+                        <a href="logPerson.html">个人操作日志</a>
+                    </li>
+                    <li>
+                        <a href="../swagger-ui/index.html">API接口文档</a>
+                    </li>
+                </ul>
+            </div>
+            <p></p>
+            <button type="button" class="btn btn-default btn-block btn-danger" onclick="logout()">退出登录</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -4,7 +4,7 @@
  *  作   者: lpc
  *  Email : lpc@hll520.cn
 -->
-<html lang="en">
+<html lang="zh-cn">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,12 +22,14 @@
     <!-- 请求 -->
     <script src="../Util.js"></script>
     <script type="text/javascript">
+        let data_sign; // 临时存储变量
         $(function () {
             httpGOLogin("/server/login/signIn/", {}, function (data) {
                 if (!data.success) {
                     alert("加载失败！" + data.msg + "请刷新");
                     return;
                 }
+                data_sign = data;
                 let length = data.data.length;
                 $("#sumRows").html(length);
                 for (let i = 0; i < length; i++) {
@@ -39,13 +41,18 @@
                         <td>${stuVo.student.college}</td>
                         <td>${stuVo.student.vocational}</td>
                         <td>${stuVo.student.className}</td>
-                        <td>${stuVo.signIns.toString()}</td>
+                        <td><a href="#" onclick="stuSign(${i})">查看详情</a></td>
                         <td>${stuVo.average}</td>
                         </tr>
                    `);
                 }
             });
         });
+
+        function stuSign(num) {
+            saveLocal("sign_stu", data_sign.data[num].student);
+            openWindow("/home/signPerson.html", "详情签到数据")
+        }
     </script>
 </head>
 <body>

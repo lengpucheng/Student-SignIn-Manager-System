@@ -28,28 +28,7 @@
             let id = $("#id").val();
             let name = $("#name").val();
             // 检验
-            doLogin(id,name);
-            // if (id.length !== 10) {
-            //     alert("学号应该是10位数");
-            //     return;
-            // }
-            // if (name.length < 1) {
-            //     alert("请输入姓名");
-            //     return;
-            // }
-            // // 请求
-            // httpGo("/server/identity/login",
-            //     {id: id, name: name},
-            //     function (result) {
-            //         if (!result.success) {
-            //             alert("登录失败！" + result.msg);
-            //             return;
-            //         }
-            //         // 写入缓存
-            //         saveLocal("user", result.data);
-            //         window.location.href = "home.html";
-            //     },
-            //     "POST");
+            doLogin(id, name);
         }
     </script>
 </head>

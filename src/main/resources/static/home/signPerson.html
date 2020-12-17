@@ -4,7 +4,7 @@
  *  作   者: lpc
  *  Email : lpc@hll520.cn
 -->
-<html lang="en">
+<html lang="zh-cn">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,7 +23,11 @@
     <script src="../Util.js"></script>
     <script type="text/javascript">
         $(function () {
-            let stu = getLocal("user");
+            let stu = getLocal("sign_stu");
+            if (stu === null || stu === undefined)
+                stu = getLocal("user");
+            else
+                saveLocal("sign_stu", null);
             httpGOLogin("/server/login/signIn/" + stu.id, {}, function (data) {
                 if (!data.success) {
                     alert("加载失败！" + data.msg + "请刷新");

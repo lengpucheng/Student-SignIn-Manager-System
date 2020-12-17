@@ -12,18 +12,30 @@
     <!-- 上述3个meta标签*必须*放在最前面，作用是自适应布局 -->
     <meta content="WTU,武汉纺织大学" name="description">
     <meta content="冷朴承" name="author">
-    <title>用户登录</title>
+    <title>首页</title>
     <!-- JQuery -->
     <script type="text/javascript" src="http://wtushop.hll520.cn:8080/static/js/jquery.min.js"></script>
     <!-- Bootstrap核心CSS和JS -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="Util.js"></script>
-    <!-- 登录页样式 -->
-    <link href="https://v3.bootcss.com/examples/signin/signin.css" rel="stylesheet">
+    <!-- 首页样式 -->
+    <link href="https://v3.bootcss.com/examples/cover/cover.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="https://www.wtu.edu.cn/images/favicon.ico">
     <!-- JS -->
     <script type="text/javascript">
+        /*  从1-10中选择一个当背景  */
+       $(function (){
+           let mg = Math.floor(Math.random() * 11);
+           $("body").css({
+               "background": "url('http://wtushop.hll520.cn/image/" + mg + ".jpg') no-repeat center",
+               "background-size": "cover",
+               "-webkit-background-size": "cover",
+               "-o-background-size": "cover"
+           });
+
+       });
+
         function login() {
             let id = $("#id").val();
             let name = $("#name").val();
@@ -53,18 +65,51 @@
     </script>
 </head>
 <body>
-<div class="form-signin">
-    <h2 class="form-signin-heading">用户登录</h2>
-    <label for="id" class="sr-only">学 号</label>
-    <input type="text" id="id" name="id" class="form-control" placeholder="请输入学号" required autofocus>
-    <p></p>
-    <label for="name" class="sr-only">姓 名</label>
-    <input type="text" id="name" name="name" class="form-control" placeholder="请输入姓名" required>
-    <p></p>
-    <p></p>
 
-    <button class="btn btn-lg btn-primary btn-block" onclick="login()">登 录</button>
+<div class="site-wrapper">
+
+    <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+            <div class="masthead clearfix">
+                <div class="inner">
+                    <a href="#"><h3 class="masthead-brand">WTUCloud-SI</h3></a>
+                    <nav>
+                        <ul class="nav masthead-nav">
+                            <li class="active"><a href="#">欢迎页面</a></li>
+                            <li><a href="login.html">用户登录</a></li>
+                            <li><a href="home/welcome.html">管理控制台</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="inner cover" style="margin-top: 50px;margin-bottom: 50px;padding: 20px;background-color: rgba(152,206,234,0.3);border-radius: 20px">
+                <div class="form-signin" style="padding: 20px">
+                    <h1 style="margin-bottom: 40px" class="cover-heading">WTUCloud-SI</h1>
+                    <label for="id" class="sr-only">学 号</label>
+                    <input type="text" id="id" name="id" class="form-control" placeholder="请输入学号" required autofocus>
+                    <p></p>
+                    <label for="name" class="sr-only">姓 名</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="请输入姓名" required>
+
+                    <button style="margin-top: 30px" class="btn btn-lg btn-primary btn-block" onclick="login()">登 录</button>
+                </div>
+            </div>
+
+            <div class="mastfoot">
+                <div class="inner">
+                    <p>Power by <a href="mailto:lpc@hll520.cn">@冷朴承</a> ,Personal Website for <a
+                            href="http://www.hll520.cn">hll520.cn</a></p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
-
 </body>
+</html>
 </html>

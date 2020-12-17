@@ -33,6 +33,8 @@ function signIn() {
     httpGOLogin("/server/login/signIn", {}, function (data) {
         if (data.success) {
             alert("签到成功！");
+            // 刷新
+            parent.location.reload();
         } else {
             if (data.code === 201) {
                 if (confirm("你已经在" + formatDateAndTimeToString(new Date(data.data.time)) + "时签过到了！\n是否覆盖签到？"))
@@ -51,6 +53,7 @@ function reSign() {
     httpGOLogin("/server/login/signIn", {}, function (data) {
         if (data.success) {
             alert("更新签到成功！");
+            parent.location.reload();
         } else {
             alert("更新签到失败！" + data.msg + "请重新签到");
         }
@@ -216,4 +219,24 @@ function formatDateAndTimeToString(date) {
     if (mins < 10) mins = "0" + mins;
     if (secs < 10) secs = "0" + secs;
     return formatDateToString(date) + " " + hours + ":" + mins + ":" + secs;
+}
+
+/**
+ *
+ * @param url 转向网页的地址;
+ * @param name 网页名称，可为空;
+ * @param iWidth 弹出窗口的宽度;
+ * @param iHeight 弹出窗口的高度;
+ */
+function openWindow(url, name, iWidth, iHeight) {
+    //window.screen.height获得屏幕的高，window.screen.width获得屏幕的宽
+    let iTop = (window.screen.height - 30 - iHeight) / 2; //获得窗口的垂直位置;
+    let iLeft = (window.screen.width - 10 - iWidth) / 2; //获得窗口的水平位置;
+    if (name === null || name === undefined)
+        name = "窗口";
+    if (iHeight === null || iHeight === undefined)
+        iHeight = window.screen.height / 2;
+    if (iWidth === null || iWidth === undefined)
+        iWidth = window.screen.height / 2;
+    window.open(url, name, 'height=' + iHeight + ',,innerHeight=' + iHeight + ',width=' + iWidth + ',innerWidth=' + iWidth + ',top=' + iTop + ',left=' + iLeft + ',toolbar=no,menubar=no,scrollbars=auto,resizeable=no,location=no,status=no');
 }
