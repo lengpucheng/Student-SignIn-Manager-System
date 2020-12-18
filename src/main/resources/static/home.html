@@ -41,17 +41,6 @@
             // 头像
             $("#avatar").html(user.name.substr(0, 1));
         });
-
-        function logout() {
-            httpGOLogin("/server/identity/logout", {}, function (data) {
-                if (!data.success) {
-                    alert("退出登录失败！" + data.msg);
-                    return;
-                }
-                saveLocal("user", null);
-                window.location.href = "/index.html";
-            });
-        }
     </script>
 </head>
 <body>

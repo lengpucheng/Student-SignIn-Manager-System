@@ -46,7 +46,7 @@ public class Swagger2Config {
                 //文档描述
                 .description("Oracle课程设计API信息 PowerByLYH")
                 //服务条款URL
-                .termsOfServiceUrl("http://127.0.0.1/")
+                .termsOfServiceUrl("/")
                 //版本号
                 .version("1.0.1")
                 .build();

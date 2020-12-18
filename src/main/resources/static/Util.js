@@ -89,6 +89,20 @@ function isLogin(success, fail) {
 }
 
 /**
+ * 退出登录
+ */
+function logout() {
+    httpGOLogin("/server/identity/logout", {}, function (data) {
+        if (!data.success) {
+            alert("退出登录失败！" + data.msg);
+            return;
+        }
+        saveLocal("user", null);
+        window.location.href = "/index.html";
+    });
+}
+
+/**
  * 登录
  * @param id id
  * @param name name
