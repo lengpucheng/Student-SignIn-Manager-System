@@ -138,7 +138,7 @@ function doLogin(id, name, success) {
 function httpGOLogin(url, data, success, method, error) {
     // 添加未登录判断
     let successLogin = function (date) {
-        if (date.code === 500) {
+        if (date.code == 500) {
             // 未登录
             alert("请先登录！" + date.msg);
             // 跳转登陆界面
