@@ -17,6 +17,14 @@ import java.util.List;
 public interface ISignInMapper {
 
     /**
+     * 根据日期查询
+     *
+     * @param date 日期
+     * @return 结果集
+     */
+    List<SignIn> getByDate(String date);
+
+    /**
      * 调用Mysql函数 获取 平均分
      *
      * @param id 学号

@@ -5,6 +5,7 @@ import cn.oracle.yhlu.work.oraclework.vo.Result;
 import cn.oracle.yhlu.work.oraclework.vo.StudentVo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lpc lpc@hll520.cn
@@ -13,6 +14,14 @@ import java.util.List;
  * 描述：
  */
 public interface SignInService {
+
+    /**
+     * 根据日期查寻签到情况
+     *
+     * @param date 日期 yyyy-mm-dd
+     * @return 签到集合
+     */
+    Result<List<Map<String, Object>>> getDate(String date);
 
     /**
      * 调用Mysql 函数获取成绩
@@ -34,7 +43,7 @@ public interface SignInService {
      * 签到
      *
      * @param id 学号
-     * @param ip      前端IP
+     * @param ip 前端IP
      * @return 是否成功
      */
     Result<SignIn> signIn(String id, String ip);
@@ -42,19 +51,21 @@ public interface SignInService {
 
     /**
      * 重新当天的签到
+     *
      * @param id 学号
      * @param ip IP
      * @return 是否签到成功
      */
-    Result<SignIn> reSign(String id,String ip);
+    Result<SignIn> reSign(String id, String ip);
 
     /**
      * 移除一条签到数据
-     * @param id 学号
+     *
+     * @param id  学号
      * @param _id 流水号
      * @return 是否移除成功
      */
-    Result<SignIn> remove(String id,int _id);
+    Result<SignIn> remove(String id, int _id);
 
 
     /**

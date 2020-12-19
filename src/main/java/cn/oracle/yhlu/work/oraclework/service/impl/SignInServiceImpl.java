@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author lpc lpc@hll520.cn
@@ -29,6 +27,23 @@ public class SignInServiceImpl implements SignInService {
     private ISignInMapper mapper;
     @Autowired
     private IStudentMapper studentMapper;
+
+    @Override
+    public Result<List<Map<String, Object>>> getDate(String date) {
+        if ("^2020-[0-9]{2}-[0-9]{2}$".matches(date))
+            return ResultUtil.fail("日期格式不对");
+        List<SignIn> byDate = mapper.getByDate(date);
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (SignIn entry : byDate) {
+            Map<String, Object> map = new HashMap<>();
+            Student student = studentMapper.queryByID(entry.getId());
+            map.put("Student", student);
+            map.put("SignIn", entry);
+            result.add(map);
+        }
+
+        return ResultUtil.success(result);
+    }
 
     @Override
     public float average(String id) {

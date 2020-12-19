@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author lpc lpc@hll520.cn
@@ -88,4 +89,9 @@ public class SignInControl {
         return service.getNow(student.getId());
     }
 
+    @ApiOperation(value = "每日情况", notes = "返回日期的签到情况，格式为YYYY-MM-DD")
+    @GetMapping("/date")
+    public Result<List<Map<String, Object>>> getByDate(String date) {
+        return service.getDate(date);
+    }
 }

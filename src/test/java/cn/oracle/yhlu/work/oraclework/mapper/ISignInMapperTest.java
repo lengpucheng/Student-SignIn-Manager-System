@@ -26,6 +26,12 @@ class ISignInMapperTest {
     private ISignInMapper mapper;
 
     @Test
+    void getByDate() {
+        List<SignIn> byDate = mapper.getByDate("2020-12-19");
+        System.out.println(byDate);
+    }
+
+    @Test
     void getAverage() {
         float average = mapper.getAverage("1704270128");
         Assert.assertNotEquals(0, average);
