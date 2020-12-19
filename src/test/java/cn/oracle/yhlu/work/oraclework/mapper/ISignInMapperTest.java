@@ -9,8 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -28,12 +26,10 @@ class ISignInMapperTest {
     private ISignInMapper mapper;
 
     @Test
-    void query() {
-        SignIn signIn = new SignIn();
-        signIn.setId("1704270128");
-        signIn.setDate(LocalDate.now().toString());
-        SignIn query = mapper.query(signIn);
-        System.out.println(query);
+    void getAverage() {
+        float average = mapper.getAverage("1704270128");
+        Assert.assertNotEquals(0, average);
+        System.out.println(average);
     }
 
     @Test

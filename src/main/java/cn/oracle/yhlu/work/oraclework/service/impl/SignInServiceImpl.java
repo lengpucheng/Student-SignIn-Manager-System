@@ -31,6 +31,11 @@ public class SignInServiceImpl implements SignInService {
     private IStudentMapper studentMapper;
 
     @Override
+    public float average(String id) {
+        return mapper.getAverage(id);
+    }
+
+    @Override
     public Result<SignIn> getNow(String id) {
         SignIn query = mapper.query(new SignIn(id, LocalDate.now().toString()));
         if (query == null)

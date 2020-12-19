@@ -1,5 +1,5 @@
 spring:
   profiles:
-    active: dev   # 使用dev的配置文件
+    active: pro   # 使用dev的配置文件
 swagger:
   enabled: true

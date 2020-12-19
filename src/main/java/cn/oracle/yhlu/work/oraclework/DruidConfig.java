@@ -27,8 +27,8 @@ public class DruidConfig {
         logger.info("init Druid Servlet Configuration ");
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
         //控制台管理用户
-        servletRegistrationBean.addInitParameter("loginUsername", "admin");
-        servletRegistrationBean.addInitParameter("loginPassword", "admin");
+        servletRegistrationBean.addInitParameter("loginUsername", "lyh");
+        servletRegistrationBean.addInitParameter("loginPassword", "lyh");
         //是否能够重置数据 禁用HTML页面上的“Reset All”功能
         servletRegistrationBean.addInitParameter("resetEnable", "false");
         return servletRegistrationBean;

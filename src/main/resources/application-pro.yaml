@@ -1,15 +1,22 @@
 server:
-  port: 8080
+  port: 80
 
 spring:
   datasource:
-    username: user    # 用户名
-    password: pass  # 密码
-    url: jdbc:mysql://ip:port/db?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC  #url
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  web:
-    resources:
-      static-locations: file:./static/
+    username: crm.hll520
+    password: crm.hll520.cn
+    url: jdbc:mysql://db.wtu.hll520.cn:10105/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver  # driver驱动
+    # druid 连接池
+    druid:
+      max-active: 30 # 最大连接数
+      min-idle: 5    # 最小连接量
+      max-wait: 10000 # 最大等待时间 10s
+      validation-query: SELECT 'WTUCLOUD' # 8小时空闲查询一次 WTUCloud 避免连接关闭
+      time-between-eviction-runs-millis: 60000 # 空闲连接检查间隔
+      min-evictable-idle-time-millis: 300000  # 空闲阈值
+
+
 # Mybatis
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml  # 扫描地址

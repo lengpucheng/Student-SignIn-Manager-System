@@ -17,7 +17,16 @@ import java.util.List;
 public interface ISignInMapper {
 
     /**
+     * 调用Mysql函数 获取 平均分
+     *
+     * @param id 学号
+     * @return 平均分
+     */
+    float getAverage(String id);
+
+    /**
      * 根据_id 获取
+     *
      * @param _id 流水号
      * @return 签到数据
      */
@@ -25,6 +34,7 @@ public interface ISignInMapper {
 
     /**
      * 根据_ID 删除
+     *
      * @param _id _id
      * @return 是否删除成功
      */

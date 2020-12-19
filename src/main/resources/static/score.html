@@ -12,7 +12,7 @@
     <!-- 上述3个meta标签*必须*放在最前面，作用是自适应布局 -->
     <meta content="WTU,武汉纺织大学" name="description">
     <meta content="冷朴承" name="author">
-    <title>首页</title>
+    <title>成绩查询</title>
     <!-- JQuery -->
     <script type="text/javascript" src="http://wtushop.hll520.cn:8080/static/js/jquery.min.js"></script>
     <!-- Bootstrap核心CSS和JS -->
@@ -36,32 +36,23 @@
 
         });
 
-        function login() {
+        function check() {
             let id = $("#id").val();
-            let name = $("#name").val();
-            // 检验
             if (id.length !== 10) {
-                alert("学号应该是10位数");
+                alert("学号必须是10位！");
                 return;
             }
-            if (name.length < 1) {
-                alert("请输入姓名");
-                return;
-            }
-            // 请求
-            httpGo("/server/identity/login",
-                {id: id, name: name},
-                function (result) {
-                    if (!result.success) {
-                        alert("登录失败！" + result.msg);
-                        return;
-                    }
-                    // 写入缓存
-                    saveLocal("user", result.data);
-                    window.location.href = "home.html";
-                },
-                "POST");
+            httpGo("server/identity/score/" + id, {}, function (data) {
+                if (data.success) {
+                    let cj = data.data;
+                    if (cj == 0 || cj === undefined || cj === null)
+                        alert("学号可能不正确？成绩不存在");
+                    $("#score").val(cj);
+                }
+            });
         }
+
+
     </script>
 </head>
 <body>
@@ -74,11 +65,11 @@
 
             <div class="masthead clearfix">
                 <div class="inner">
-                    <a href="#"><h3 class="masthead-brand">WTUCloud-SI</h3></a>
+                    <a href="index.html"><h3 class="masthead-brand">WTUCloud-SI</h3></a>
                     <nav>
                         <ul class="nav masthead-nav">
-                            <li class="active"><a href="#">首页</a></li>
-                            <li><a href="score.html">成绩查询</a></li>
+                            <li><a href="index.html">首页</a></li>
+                            <li class="active"><a href="#">成绩查询</a></li>
                             <li><a href="login.html">用户登录</a></li>
                         </ul>
                     </nav>
@@ -88,15 +79,17 @@
             <div class="inner cover"
                  style="margin-top: 50px;margin-bottom: 50px;padding: 20px;background-color: rgba(152,206,234,0.3);border-radius: 20px">
                 <div class="form-signin" style="padding: 20px">
-                    <h1 style="margin-bottom: 40px" class="cover-heading">WTUCloud-SI</h1>
+                    <h1 style="margin-bottom: 40px" class="cover-heading">平时成绩查询</h1>
                     <label for="id" class="sr-only">学 号</label>
                     <input type="text" id="id" name="id" class="form-control" placeholder="请输入学号" required autofocus>
-                    <p></p>
-                    <label for="name" class="sr-only">姓 名</label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="请输入姓名" required>
-
-                    <button style="margin-top: 30px" class="btn btn-lg btn-primary btn-block" onclick="login()">登 录
+                    <button style="margin-top: 15px;margin-bottom: 30px" class="btn btn-lg btn-info btn-block"
+                            onclick="check()">查询成绩
                     </button>
+                    <label for="score" class="sr-only">成 绩</label>
+                    <input type="text" id="score" name="score" class="form-control" disabled placeholder="请先进行查询"
+                           required autofocus>
+                    <p></p>
+                    <p></p>
                 </div>
             </div>
 

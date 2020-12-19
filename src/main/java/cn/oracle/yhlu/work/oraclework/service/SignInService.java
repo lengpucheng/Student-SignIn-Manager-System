@@ -1,7 +1,6 @@
 package cn.oracle.yhlu.work.oraclework.service;
 
 import cn.oracle.yhlu.work.oraclework.po.SignIn;
-import cn.oracle.yhlu.work.oraclework.po.Student;
 import cn.oracle.yhlu.work.oraclework.vo.Result;
 import cn.oracle.yhlu.work.oraclework.vo.StudentVo;
 
@@ -16,7 +15,16 @@ import java.util.List;
 public interface SignInService {
 
     /**
+     * 调用Mysql 函数获取成绩
+     *
+     * @param id 学号
+     * @return 成绩
+     */
+    float average(String id);
+
+    /**
      * 获取今天的签到数据
+     *
      * @param id 学号
      * @return 签到数据
      */

@@ -34,4 +34,7 @@
         FROM SignIn
         where _id = #{_id};
     </select>
+    <select id="getAverage" resultType="java.lang.Float">
+        SELECT get_avg(#{id});
+    </select>
 </mapper>
