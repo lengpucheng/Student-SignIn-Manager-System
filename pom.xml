@@ -10,7 +10,7 @@
     </parent>
     <groupId>cn.oracle.yhlu.work</groupId>
     <artifactId>oracle-work</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.2-RELEASE</version>
     <name>oracle-work</name>
     <description>Oracle数据库结课专业</description>
 
@@ -116,24 +116,4 @@
             </plugin>
         </plugins>
     </build>
-    <!--    <build>-->
-    <!--        <plugins>-->
-    <!--            <plugin>-->
-    <!--                <groupId>org.springframework.boot</groupId>-->
-    <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-    <!--                <configuration>-->
-    <!--                    &lt;!&ndash; 工程主入口&ndash;&gt;-->
-    <!--                    <mainClass/>-->
-    <!--                </configuration>-->
-    <!--                <executions>-->
-    <!--                    <execution>-->
-    <!--                        <goals>-->
-    <!--                            <goal>repackage</goal>-->
-    <!--                        </goals>-->
-    <!--                    </execution>-->
-    <!--                </executions>-->
-    <!--            </plugin>-->
-    <!--        </plugins>-->
-    <!--    </build>-->
-
 </project>

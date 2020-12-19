@@ -24,7 +24,7 @@
     <script type="text/javascript">
         $(function () {
             let stu = getLocal("user");
-            httpGOLogin("/server/login/log/" + id, {}, function (data) {
+            httpGOLogin("/server/login/log/" + stu.id, {}, function (data) {
                 if (!data.success) {
                     alert("加载失败！" + data.msg + "请刷新");
                     return;

@@ -44,11 +44,11 @@ public class Swagger2Config {
                 //设置文档标题(API名称)
                 .title("Oracle Work API 信息")
                 //文档描述
-                .description("Oracle课程设计API信息 PowerByLYH")
+                .description("Oracle课程设计API信息 PowerByLYH\n这里会显示已经写好的API\n部分方法没有提供对应的界面，但是已经写好了SQL和接口，可以在这里进行测试！")
                 //服务条款URL
                 .termsOfServiceUrl("/")
                 //版本号
-                .version("1.0.1")
+                .version("1.0.2")
                 .build();
     }
 }
