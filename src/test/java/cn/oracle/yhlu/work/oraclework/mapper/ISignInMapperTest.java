@@ -48,15 +48,21 @@ class ISignInMapperTest {
     @Test
     void insert() {
         SignIn signIn=new SignIn();
-        signIn.setIp("10.170.1.1.");
+        signIn.setIp("10.170.1.1");
         signIn.setTime(new Date());
         signIn.setDate(LocalDate.now().toString());
-        signIn.setId("1704270128");
+        signIn.setId("test_1704270128");
         boolean insert = mapper.insert(signIn);
         Assert.assertTrue(insert);
     }
 
     @Test
     void update() {
+    }
+
+    @Test
+    void search() {
+        List<SignIn> search = mapper.search("1704270128", "time", "ADSC", 1000, 2);
+        System.out.println(search);
     }
 }

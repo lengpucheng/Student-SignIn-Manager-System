@@ -42,4 +42,21 @@
         FROM SignIn
         WHERE date = #{date}
     </select>
+    <select id="search" resultType="cn.oracle.yhlu.work.oraclework.po.SignIn">
+        SELECT * FROM SignIn where id=#{id,jdbcType=INTEGER}
+        <if test="orderBy!=null">
+            ORDER BY ${orderBy}
+            <choose>
+                <when test="order=='ASC'">
+                    ASC
+                </when>
+                <otherwise>
+                    DESC
+                </otherwise>
+            </choose>
+        </if>
+        <if test="limit!=1000">
+            Limit ${limit} offset ${offset}
+        </if>
+    </select>
 </mapper>

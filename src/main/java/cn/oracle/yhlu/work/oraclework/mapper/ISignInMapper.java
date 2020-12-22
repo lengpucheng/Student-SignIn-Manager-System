@@ -79,4 +79,6 @@ public interface ISignInMapper {
      * @return 是否修改成功
      */
     boolean update(SignIn signIn);
+
+    List<SignIn> search(String id, String orderBy, String order, int limit, int offset);
 }
