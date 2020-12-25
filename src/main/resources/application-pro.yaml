@@ -20,4 +20,4 @@ spring:
 # Mybatis
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml  # 扫描地址
-  type-aliases-package: cn.oracle.yhlu.work.oraclework.po   # 包名
+  type-aliases-package: cn.hll520.io.wtucloud.si.po   # 包名

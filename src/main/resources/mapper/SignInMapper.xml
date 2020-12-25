@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.oracle.yhlu.work.oraclework.mapper.ISignInMapper">
+<mapper namespace="cn.hll520.io.wtucloud.si.mapper.ISignInMapper">
     <insert id="insert">
         INSERT INTO SignIn(id, date, time, ip)
         values (#{id}, #{date}, #{time}, #{ip});
@@ -18,18 +18,18 @@
         from SignIn
         where _id = #{_id};
     </delete>
-    <select id="query" resultType="cn.oracle.yhlu.work.oraclework.po.SignIn">
+    <select id="query" resultType="cn.hll520.io.wtucloud.si.po.SignIn">
         SELECT *
         FROM SignIn
         where date = #{date}
           and id = #{id};
     </select>
-    <select id="queryByID" resultType="cn.oracle.yhlu.work.oraclework.po.SignIn">
+    <select id="queryByID" resultType="cn.hll520.io.wtucloud.si.po.SignIn">
         SELECT *
         FROM SignIn
         where id = #{id}
     </select>
-    <select id="select" resultType="cn.oracle.yhlu.work.oraclework.po.SignIn">
+    <select id="select" resultType="cn.hll520.io.wtucloud.si.po.SignIn">
         SELECT *
         FROM SignIn
         where _id = #{_id};
@@ -37,12 +37,12 @@
     <select id="getAverage" resultType="java.lang.Float">
         SELECT get_avg(#{id});
     </select>
-    <select id="getByDate" resultType="cn.oracle.yhlu.work.oraclework.po.SignIn">
+    <select id="getByDate" resultType="cn.hll520.io.wtucloud.si.po.SignIn">
         SELECT *
         FROM SignIn
         WHERE date = #{date}
     </select>
-    <select id="search" resultType="cn.oracle.yhlu.work.oraclework.po.SignIn">
+    <select id="search" resultType="cn.hll520.io.wtucloud.si.po.SignIn">
         SELECT * FROM SignIn where id=#{id,jdbcType=INTEGER}
         <if test="orderBy!=null">
             ORDER BY ${orderBy}

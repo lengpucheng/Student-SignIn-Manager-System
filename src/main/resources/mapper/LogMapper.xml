@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.oracle.yhlu.work.oraclework.mapper.ILogMapper">
-    <insert id="insert" useGeneratedKeys="true" keyProperty="_id" parameterType="cn.oracle.yhlu.work.oraclework.po.Log">
+<mapper namespace="cn.hll520.io.wtucloud.si.mapper.ILogMapper">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="_id" parameterType="cn.hll520.io.wtucloud.si.po.Log">
         INSERT into log(id, time, event, ip)
         VALUES (#{id}, #{time}, #{event}, #{ip});
     </insert>
@@ -10,16 +10,16 @@
         from log
         where _id = #{_id};
     </delete>
-    <select id="selectByID" resultType="cn.oracle.yhlu.work.oraclework.po.Log">
+    <select id="selectByID" resultType="cn.hll520.io.wtucloud.si.po.Log">
         SELECT *
         FROM log
         where id = #{id};
     </select>
-    <select id="select" resultType="cn.oracle.yhlu.work.oraclework.po.Log">
+    <select id="select" resultType="cn.hll520.io.wtucloud.si.po.Log">
         SELECT *
         FROM log;
     </select>
-    <select id="query" resultType="cn.oracle.yhlu.work.oraclework.po.Log">
+    <select id="query" resultType="cn.hll520.io.wtucloud.si.po.Log">
         SELECT *
         FROM log
         where _id = #{_id};
