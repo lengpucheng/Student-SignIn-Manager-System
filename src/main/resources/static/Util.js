@@ -108,7 +108,7 @@ function logout() {
  * @param name name
  * @param success 回调
  */
-function doLogin(id, name, success) {
+function doLogin(id, name, remember, success) {
     // 检验
     if (id.length !== 10) {
         alert("学号应该是10位数");
@@ -118,6 +118,8 @@ function doLogin(id, name, success) {
         alert("请输入姓名");
         return;
     }
+    if (remember != true)
+        remember = false;
     // 默认回调
     if (success === null || success === undefined)
         success = function (result) {
@@ -138,7 +140,7 @@ function doLogin(id, name, success) {
         };
 
     // 请求
-    httpGo("/server/identity/login", {id: id, name: name}, success, "POST");
+    httpGo("/server/identity/login", {id: id, name: name, remember: remember}, success, "POST");
 }
 
 /**

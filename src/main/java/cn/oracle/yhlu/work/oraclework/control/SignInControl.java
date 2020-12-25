@@ -4,17 +4,16 @@ import cn.oracle.yhlu.work.oraclework.po.SignIn;
 import cn.oracle.yhlu.work.oraclework.po.Student;
 import cn.oracle.yhlu.work.oraclework.service.LogService;
 import cn.oracle.yhlu.work.oraclework.service.SignInService;
-import cn.oracle.yhlu.work.oraclework.util.IPTool;
 import cn.oracle.yhlu.work.oraclework.util.ResultUtil;
 import cn.oracle.yhlu.work.oraclework.vo.Result;
 import cn.oracle.yhlu.work.oraclework.vo.StudentVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -34,15 +33,13 @@ public class SignInControl {
     private SignInService service;
     @Autowired
     private LogService loger;
-    @Autowired
-    private HttpServletRequest request;
 
 
     @ApiOperation(value = "学生签到", notes = "必须先登录且一天只能签一次，重复签到会失败，需要使用重新签到！")
     @PostMapping()
     public Result<SignIn> singIn() {
-        Student student = (Student) request.getSession().getAttribute("student");
-        String ipAddr = IPTool.getIpAddr(request);
+        Student student = (Student) SecurityUtils.getSubject().getPrincipal();
+        String ipAddr = SecurityUtils.getSubject().getSession().getHost();
         loger.log("尝试签到", ipAddr, student.getId());
         return service.signIn(student.getId(), ipAddr);
     }
@@ -50,16 +47,16 @@ public class SignInControl {
     @ApiOperation(value = "删除指定签到数据", notes = "只能删除本人,参数为{流水号}")
     @DeleteMapping("/{sid}")
     public Result<SignIn> delete(@PathVariable("sid") int sid) {
-        Student student = (Student) request.getSession().getAttribute("student");
-        loger.log("尝试删除签到记录", request);
+        Student student = (Student) SecurityUtils.getSubject().getPrincipal();
+        loger.log("尝试删除签到记录", SecurityUtils.getSubject().getSession().getHost());
         return service.remove(student.getId(), sid);
     }
 
     @ApiOperation(value = "重新签到", notes = "只能修改本人，且只能修改当天的")
     @PutMapping()
     public Result<SignIn> update() {
-        Student student = (Student) request.getSession().getAttribute("student");
-        String ipAddr = IPTool.getIpAddr(request);
+        Student student = (Student) SecurityUtils.getSubject().getPrincipal();
+        String ipAddr = SecurityUtils.getSubject().getSession().getHost();
         loger.log("尝试覆盖签到", ipAddr, student.getId());
         return service.reSign(student.getId(), ipAddr);
     }
@@ -68,7 +65,7 @@ public class SignInControl {
     @GetMapping("")
     public Result<List<StudentVo>> show() {
         List<StudentVo> show = service.show();
-        loger.log("尝试获取全部签到数据", request);
+        loger.log("尝试获取全部签到数据", SecurityUtils.getSubject().getSession().getHost());
         if (show == null)
             return ResultUtil.fail("获取失败");
         return ResultUtil.success(show);
@@ -78,7 +75,7 @@ public class SignInControl {
     @GetMapping("/{id}")
     public Result<StudentVo> show(@PathVariable("id") String id) {
         StudentVo show = service.show(id);
-        loger.log("尝试获取" + id + "的签到记录", request);
+        loger.log("尝试获取" + id + "的签到记录", SecurityUtils.getSubject().getSession().getHost());
         if (show.getSignIns().size() == 0)
             return ResultUtil.fail(show, "学号输入有误");
         return ResultUtil.success(show);
@@ -87,7 +84,7 @@ public class SignInControl {
     @ApiOperation("获取今天的签到数据")
     @GetMapping("/now")
     public Result<SignIn> now() {
-        Student student = (Student) request.getSession().getAttribute("student");
+        Student student = (Student) SecurityUtils.getSubject().getPrincipal();
         return service.getNow(student.getId());
     }
 

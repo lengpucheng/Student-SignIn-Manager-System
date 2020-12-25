@@ -27,8 +27,9 @@
         function login() {
             let id = $("#id").val();
             let name = $("#name").val();
+            let remember = $("#remember").is(":checked");
             // 检验
-            doLogin(id, name);
+            doLogin(id, name, remember);
         }
     </script>
 </head>
@@ -41,6 +42,9 @@
     <label for="name" class="sr-only">姓 名</label>
     <input type="text" id="name" name="name" class="form-control" placeholder="请输入姓名" required>
     <p></p>
+    <div class="checkbox">
+        <label><input type="checkbox" value="remember-me" id="remember"> 记住我</label>
+    </div>
     <p></p>
 
     <button class="btn btn-lg btn-primary btn-block" onclick="login()">登 录</button>

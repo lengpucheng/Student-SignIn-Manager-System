@@ -48,15 +48,17 @@ public class ShiroConfig {
 //        filterMap.put("/shiro/msg/admin/**", "perms[user:admin]");
         // 放行pass -- 要在拦截前面
         filterMap.put("/shiro/msg/pass/**", "anon");
+        filterMap.put("/server/identity/**", "anon");
         // 一切拦截 --- 要在最下面
         filterMap.put("/shiro/msg/**", "user");
+        filterMap.put("/server/**", "user");
         // 设置
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
 
         // 添加未登录跳转路径
-        shiroFilterFactoryBean.setLoginUrl("/shiro");
+        shiroFilterFactoryBean.setLoginUrl("/server/identity");
         // 添加未授权跳转路径
-        shiroFilterFactoryBean.setUnauthorizedUrl("/shiro/msg/notSafe");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/server/identity");
 
         return shiroFilterFactoryBean;
     }

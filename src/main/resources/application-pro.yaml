@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    username: crm.hll520
-    password: crm.hll520.cn
-    url: jdbc:mysql://db.wtu.hll520.cn:10105/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: name
+    password: pass
+    url: jdbc:mysql://host:prot/db?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver  # driver驱动
     # druid 连接池
     druid:

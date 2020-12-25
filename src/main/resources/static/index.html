@@ -39,28 +39,9 @@
         function login() {
             let id = $("#id").val();
             let name = $("#name").val();
+            let remember = $("#remember").is(":checked");
             // 检验
-            if (id.length !== 10) {
-                alert("学号应该是10位数");
-                return;
-            }
-            if (name.length < 1) {
-                alert("请输入姓名");
-                return;
-            }
-            // 请求
-            httpGo("/server/identity/login",
-                {id: id, name: name},
-                function (result) {
-                    if (!result.success) {
-                        alert("登录失败！" + result.msg);
-                        return;
-                    }
-                    // 写入缓存
-                    saveLocal("user", result.data);
-                    window.location.href = "home.html";
-                },
-                "POST");
+            doLogin(id, name, remember);
         }
     </script>
 </head>
@@ -94,7 +75,10 @@
                     <p></p>
                     <label for="name" class="sr-only">姓 名</label>
                     <input type="text" id="name" name="name" class="form-control" placeholder="请输入姓名" required>
-
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="remember-me" id="remember"> 记住我</label>
+                    </div>
+                    <p></p>
                     <button style="margin-top: 30px" class="btn btn-lg btn-primary btn-block" onclick="login()">登 录
                     </button>
                 </div>
