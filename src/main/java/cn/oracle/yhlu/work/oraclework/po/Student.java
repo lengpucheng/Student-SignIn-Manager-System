@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
 /**
  * @author lpc lpc@hll520.cn
  * @version 1.0  2020-12-13-13:44
@@ -12,7 +14,9 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @ApiModel(value = "学生信息", description = "用于标记一个学生的信息")
-public class Student {
+public class Student implements Serializable {
+    // 序列号
+    private static final long serialVersionUID = 1L;
     // 学号
     @ApiModelProperty("学号")
     private String id;

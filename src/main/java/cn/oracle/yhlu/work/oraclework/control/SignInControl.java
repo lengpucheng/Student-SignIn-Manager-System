@@ -10,6 +10,7 @@ import cn.oracle.yhlu.work.oraclework.vo.Result;
 import cn.oracle.yhlu.work.oraclework.vo.StudentVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ import java.util.Map;
  */
 @Api(tags = "学生操作")
 @RestController // 该类自带了 @ResponseBody
+@RequiresPermissions("admin")
 @RequestMapping("/server/login/signIn")
 public class SignInControl {
 

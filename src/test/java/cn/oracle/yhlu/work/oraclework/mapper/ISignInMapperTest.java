@@ -62,7 +62,7 @@ class ISignInMapperTest {
 
     @Test
     void search() {
-        List<SignIn> search = mapper.search("1704270128", "time", "ADSC", 1000, 2);
+        List<SignIn> search = mapper.search("1704270128", null, "ADSC", 10, 2);
         System.out.println(search);
     }
 }
